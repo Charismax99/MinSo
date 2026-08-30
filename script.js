@@ -24,9 +24,9 @@ const translations = {
     punchNeedle: "Punch Needle",
     fromOurHands: "From our hands",
     galleryTitle: "A peek at what we make",
-    galleryAltOne: "Min-So black handmade tote with colourful Good Things Take Time lettering",
-    galleryAltTwo: "Min-So handmade floral tote bag in soft pastel colours",
-    galleryAltThree: "Min-So black handmade tote with a playful bubble tea design",
+    galleryAltOne: "Min-So handmade canvas tote with a warm orange sun design",
+    galleryAltTwo: "Min-So handmade canvas tote with a minimal relax design",
+    galleryAltThree: "Min-So handmade canvas tote with a playful You decide design",
     footerLove: "Handmade with love",
     whatsappToast: "Message us anytime 🤍"
   },
@@ -49,9 +49,9 @@ const translations = {
     punchNeedle: "بانش نيدل",
     fromOurHands: "من إيدينا",
     galleryTitle: "لمحة من شغلنا",
-    galleryAltOne: "شنطة هاند ميد سوداء من مين سو بكتابة ملونة ومبهجة",
-    galleryAltTwo: "شنطة هاند ميد من مين سو بنقشة ورد وألوان باستيل هادية",
-    galleryAltThree: "شنطة هاند ميد سوداء من مين سو برسمة بابل تي لطيفة",
+    galleryAltOne: "شنطة كانفاس هاند ميد من مين سو برسمة شمس برتقالية دافية",
+    galleryAltTwo: "شنطة كانفاس هاند ميد من مين سو بتصميم ريلاكس بسيط",
+    galleryAltThree: "شنطة كانفاس هاند ميد من مين سو بتصميم يو ديسايد لطيف",
     footerLove: "هاند ميد بحب",
     whatsappToast: "راسلينا في أي وقت 🤍"
   }
@@ -75,7 +75,6 @@ function setLanguage(language) {
     image.alt = translations[language][image.dataset.altI18n];
   });
   languageLabel.textContent = language === "ar" ? "الإنجليزية" : "Arabic";
-  languageButton.querySelector("span[aria-hidden]").textContent = "🌐";
   languageButton.setAttribute("aria-label", language === "ar" ? "Switch to English" : "Switch to Arabic");
   document.title = language === "ar" ? "Min-So | هاند ميد بحب" : "Min-So | Handmade with Love";
 }
