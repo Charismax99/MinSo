@@ -37,7 +37,7 @@
             <span class="social-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle class="fill" cx="17.5" cy="6.5" r="1"></circle></svg>
             </span>
-            <span class="social-copy"><strong data-i18n="instagram">Instagram</strong><small class="social-handle" dir="ltr">@minsohandmade</small></span>
+            <span class="social-copy"><strong data-i18n="instagram">Instagram</strong><bdi class="social-handle" dir="ltr">@minsohandmade</bdi></span>
             <span class="arrow" aria-hidden="true">↗</span>
           </a>
           <a class="social-card facebook" href="https://facebook.com/MinSoHandmade/" target="_blank" rel="noopener noreferrer">
@@ -98,16 +98,48 @@
           <p class="section-kicker" data-i18n="fromOurHands">From our hands</p>
           <h2 id="gallery-title" data-i18n="galleryTitle">A peek at what we make</h2>
         </div>
-        <div class="gallery-grid">
-          <figure class="gallery-item">
-            <img src="assets/min-so-sun-tote.jpg" alt="Min-So handmade canvas tote with a warm orange sun design" data-alt-i18n="galleryAltOne" loading="lazy" decoding="async">
-          </figure>
-          <figure class="gallery-item">
-            <img src="assets/min-so-relax-tote.jpg" alt="Min-So handmade canvas tote with a minimal relax design" data-alt-i18n="galleryAltTwo" loading="lazy" decoding="async">
-          </figure>
-          <figure class="gallery-item">
-            <img src="assets/min-so-you-decide-tote.jpg" alt="Min-So handmade canvas tote with a playful You decide design" data-alt-i18n="galleryAltThree" loading="lazy" decoding="async">
-          </figure>
+        <div class="gallery-carousel" data-gallery-carousel>
+          <button class="gallery-control gallery-previous" type="button" data-gallery-previous aria-label="Previous gallery image">
+            <span aria-hidden="true">&#8249;</span>
+          </button>
+          <div class="gallery-viewport" data-gallery-viewport tabindex="0" aria-label="Min-So gallery">
+            <div class="gallery-track" role="list">
+              <figure class="gallery-item is-active" role="listitem">
+                <button class="gallery-open" type="button" data-gallery-index="0" aria-label="Open image 1 of 6">
+                  <img src="assets/min-so-sun-tote.jpg" alt="Min-So handmade canvas tote with a warm orange sun design" data-alt-i18n="galleryAltOne" loading="lazy" decoding="async">
+                </button>
+              </figure>
+              <figure class="gallery-item" role="listitem">
+                <button class="gallery-open" type="button" data-gallery-index="1" aria-label="Open image 2 of 6">
+                  <img src="assets/min-so-relax-tote.jpg" alt="Min-So handmade canvas tote with a minimal relax design" data-alt-i18n="galleryAltTwo" loading="lazy" decoding="async">
+                </button>
+              </figure>
+              <figure class="gallery-item" role="listitem">
+                <button class="gallery-open" type="button" data-gallery-index="2" aria-label="Open image 3 of 6">
+                  <img src="assets/min-so-you-decide-tote.jpg" alt="Min-So handmade canvas tote with a playful You decide design" data-alt-i18n="galleryAltThree" loading="lazy" decoding="async">
+                </button>
+              </figure>
+              <figure class="gallery-item" role="listitem">
+                <button class="gallery-open" type="button" data-gallery-index="3" aria-label="Open image 4 of 6">
+                  <img src="assets/min-so-floral-tote.png" alt="Min-So floral handmade tote bag styled outdoors" data-alt-i18n="galleryAltFour" loading="lazy" decoding="async">
+                </button>
+              </figure>
+              <figure class="gallery-item" role="listitem">
+                <button class="gallery-open" type="button" data-gallery-index="4" aria-label="Open image 5 of 6">
+                  <img src="assets/min-so-good-things-tote.png" alt="Min-So black handmade tote with a colourful Good Things Take Time design" data-alt-i18n="galleryAltFive" loading="lazy" decoding="async">
+                </button>
+              </figure>
+              <figure class="gallery-item" role="listitem">
+                <button class="gallery-open" type="button" data-gallery-index="5" aria-label="Open image 6 of 6">
+                  <img src="assets/min-so-bubble-tea-tote.png" alt="Min-So black handmade tote with a playful bubble tea design" data-alt-i18n="galleryAltSix" loading="lazy" decoding="async">
+                </button>
+              </figure>
+            </div>
+          </div>
+          <button class="gallery-control gallery-next" type="button" data-gallery-next aria-label="Next gallery image">
+            <span aria-hidden="true">&#8250;</span>
+          </button>
+          <div class="gallery-pagination" data-gallery-pagination aria-label="Choose a gallery image"></div>
         </div>
       </section>
     </main>
@@ -115,9 +147,18 @@
     <footer class="site-footer reveal">
       <img src="assets/min-so-logo.png" alt="" width="72" height="72" loading="lazy" decoding="async">
       <p>© Min-So</p>
-      <a href="https://instagram.com/MinSoHandmade" target="_blank" rel="noopener noreferrer">@minsohandmade</a>
+      <a class="footer-instagram" href="https://instagram.com/MinSoHandmade" target="_blank" rel="noopener noreferrer"><bdi class="social-handle" dir="ltr">@minsohandmade</bdi></a>
       <small><span data-i18n="footerLove">Handmade with love</span> 🤍</small>
     </footer>
+    <div class="lightbox" data-lightbox role="dialog" aria-modal="true" aria-hidden="true" hidden>
+      <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">&#215;</span></button>
+      <button class="lightbox-control lightbox-previous" type="button" data-lightbox-previous aria-label="Previous image"><span aria-hidden="true">&#8249;</span></button>
+      <figure class="lightbox-stage" data-lightbox-stage>
+        <img src="" alt="" data-lightbox-image>
+        <figcaption data-lightbox-counter>1 / 6</figcaption>
+      </figure>
+      <button class="lightbox-control lightbox-next" type="button" data-lightbox-next aria-label="Next image"><span aria-hidden="true">&#8250;</span></button>
+    </div>
     <div class="toast" role="status" aria-live="polite" data-toast></div>
   </body>
 </html>
