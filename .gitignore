@@ -1,0 +1,21 @@
+# Dependencies and generated output
+node_modules/
+dist/
+.cache/
+.tmp/
+temp/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+.openai/
+.codex/
+.agents/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
