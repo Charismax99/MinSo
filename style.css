@@ -522,7 +522,7 @@ body.lightbox-open { overflow: hidden; }
   max-width: calc(100% - 2rem);
   padding: 0.8rem 1rem;
   border-radius: 999px;
-  color: #fffaf5;
+  color: #6b4433;
   background: var(--brown);
   box-shadow: var(--shadow);
   font: 500 0.78rem/1.3 Arial, sans-serif;
