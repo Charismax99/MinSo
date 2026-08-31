@@ -40,6 +40,7 @@ const translations = {
     lightboxPrevious: "Previous image",
     lightboxNext: "Next image",
     footerLove: "Handmade with love",
+    footerPoweredBy: "Powered by:",
     whatsappToast: "Message us anytime 🤍"
   },
   ar: {
@@ -77,6 +78,7 @@ const translations = {
     lightboxPrevious: "الصورة السابقة",
     lightboxNext: "الصورة التالية",
     footerLove: "هاند ميد بحب",
+    footerPoweredBy: "بدعم من:",
     whatsappToast: "راسلينا في أي وقت 🤍"
   }
 };
