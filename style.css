@@ -460,7 +460,7 @@ body.lightbox-open { overflow: hidden; }
   margin: 0 12px;
   border-radius: 50%;
   vertical-align: middle;
-  background: rgba(212, 175, 55, 0.5);
+  background: #a9725b;
   animation: fb-dot 2.5s ease-in-out infinite;
 }
 .footer-credit {
