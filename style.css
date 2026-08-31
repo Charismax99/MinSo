@@ -480,18 +480,36 @@ body.lightbox-open { overflow: hidden; }
   position: relative;
   display: inline-block;
   padding-bottom: 4px;
-  color: #6b4433;
-  font-family: Arial, sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 0.74rem;
   font-weight: 700;
   text-decoration: none !important;
   direction: ltr;
   unicode-bidi: isolate;
-  background: none;
-  -webkit-text-fill-color: currentColor;
-  transition: color 0.3s ease;
+
+  /* Warm-brown animated gradient */
+  color: #8f5f4a;
+  background: linear-gradient(
+    90deg,
+    #8f5f4a,
+    #b88670,
+    #d2a28c,
+    #8f5f4a
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 300% auto;
+  animation: fb-gold 5s ease-in-out infinite;
+  transition: filter 0.3s ease;
 }
-.site-footer .fb-link:hover { color: #000; }
+
+/* Hover: slightly darker / stronger */
+.site-footer .fb-link:hover {
+  filter: brightness(0.72);
+}
+
+/* Underline: hidden until hover, expands from center */
 .site-footer .fb-link::after {
   content: "";
   position: absolute;
@@ -500,12 +518,21 @@ body.lightbox-open { overflow: hidden; }
   width: 0;
   height: 1px;
   transform: translateX(-50%);
-  background: #6b4433;
-  transition: width 0.5s ease-in-out, background-color 0.3s ease;
+  background: #8f5f4a;
+  transition:
+    width 0.5s ease-in-out,
+    background-color 0.3s ease;
 }
+
 .site-footer .fb-link:hover::after {
   width: 100%;
-  background: #000;
+  background: #6b4433;
+}
+
+@keyframes fb-gold {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes fb-dot {
