@@ -480,7 +480,7 @@ body.lightbox-open { overflow: hidden; }
   position: relative;
   display: inline-block;
   padding-bottom: 4px;
-  font-family: Montserrat, sans-serif;
+  font-family: Space Grotesk, sans-serif;
   font-size: 0.74rem;
   font-weight: 700;
   text-decoration: none !important;
@@ -510,23 +510,28 @@ body.lightbox-open { overflow: hidden; }
 }
 
 /* Underline: hidden until hover, expands from center */
-.site-footer .fb-link::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 0;
-  height: 1px;
-  transform: translateX(-50%);
-  background: #8f5f4a;
-  transition:
-    width 0.5s ease-in-out,
-    background-color 0.3s ease;
+.site-footer .fb-link::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:0;
+  width:0%;
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #8f5f4a,
+    #b88670,
+    #d2a28c,
+    #8f5f4a,
+    transparent
+  );
+  transition:width .5s ease-in-out;
 }
 
-.site-footer .fb-link:hover::after {
-  width: 100%;
-  background: #6b4433;
+.site-footer .fb-link:hover::after{
+  width:100%;
 }
 
 @keyframes fb-gold {
