@@ -9,6 +9,7 @@ temp/
 .env
 .env.*
 !.env.example
+contact/smtp-config.php
 .openai/
 .codex/
 .agents/
