@@ -17,8 +17,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css?v=hero-4">
+    <script src="script.js?v=product-8" defer></script>
   </head>
   <body>
     <header class="site-header">
@@ -29,6 +29,30 @@
     </header>
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-ambience" aria-hidden="true">
+          <span class="hero-glow hero-glow-left"></span>
+          <span class="hero-glow hero-glow-right"></span>
+          <svg class="hero-thread" viewBox="0 0 1440 650" preserveAspectRatio="none">
+            <path class="hero-thread-base" pathLength="1000" d="M-60 500 C85 440 105 235 260 245 C410 255 390 425 245 430 S80 565 320 615 M1500 170 C1330 125 1195 185 1250 315 C1310 450 1475 345 1410 495 S1210 585 1100 625" />
+            <path class="hero-thread-trace" pathLength="1000" d="M-60 500 C85 440 105 235 260 245 C410 255 390 425 245 430 S80 565 320 615 M1500 170 C1330 125 1195 185 1250 315 C1310 450 1475 345 1410 495 S1210 585 1100 625" />
+            <g class="hero-thread-ornaments">
+              <circle cx="260" cy="245" r="18" />
+              <path d="M260 232v26M247 245h26M251 236l18 18M269 236l-18 18" />
+              <circle cx="1250" cy="315" r="18" />
+              <path d="M1250 302v26M1237 315h26M1241 306l18 18M1259 306l-18 18" />
+            </g>
+          </svg>
+          <svg class="hero-thread hero-thread-mobile" viewBox="0 0 390 760" preserveAspectRatio="none">
+            <path class="hero-thread-base" pathLength="1000" d="M-25 105 C20 90 85 110 72 165 C60 215 5 195 5 265 C5 335 35 380 25 435 C15 485 -5 510 -25 555 M415 105 C370 90 305 110 318 165 C330 215 390 195 390 265 C390 335 360 390 365 445 C370 500 405 530 420 555 M-20 680 C90 645 155 715 260 680 S360 645 420 700" />
+            <path class="hero-thread-trace" pathLength="1000" d="M-25 105 C20 90 85 110 72 165 C60 215 5 195 5 265 C5 335 35 380 25 435 C15 485 -5 510 -25 555 M415 105 C370 90 305 110 318 165 C330 215 390 195 390 265 C390 335 360 390 365 445 C370 500 405 530 420 555 M-20 680 C90 645 155 715 260 680 S360 645 420 700" />
+            <g class="hero-thread-ornaments">
+              <circle cx="72" cy="165" r="12" />
+              <path d="M72 156v18M63 165h18" />
+              <circle cx="318" cy="165" r="12" />
+              <path d="M318 156v18M309 165h18" />
+            </g>
+          </svg>
+        </div>
         <p class="eyebrow" data-i18n="eyebrow">MADE WITH HEART. MADE BY HAND.</p>
         <h1 id="hero-title" class="hero-statement"><span data-i18n="heroTitle">Handmade with love</span> <span aria-hidden="true">🤍</span></h1>
         <p class="hero-copy" data-i18n="heroCopy">Handmade bags, pouches, punch needle pieces &amp; more.</p>
@@ -73,22 +97,149 @@
           <p class="section-kicker" data-i18n="madeForYou">Made for you</p>
           <h2 id="categories-title" data-i18n="categoriesTitle">Find your favourite piece</h2>
         </div>
-        <div class="category-grid">
-          <article class="category-card">
+        <div class="category-grid" role="tablist" aria-label="Product categories" data-category-tablist>
+          <button class="category-card category-trigger" id="category-bags" type="button" role="tab" data-product-trigger aria-selected="false" aria-controls="bag-product-panel" tabindex="-1">
             <span class="category-art art-bag" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M13 25h38l-3 28H16l-3-28Z"></path><path d="M23 27c0-12 18-12 18 0"></path><path d="M20 36c8 4 16 4 24 0"></path></svg></span>
-            <h3 data-i18n="bags">Bags</h3>
-          </article>
-          <article class="category-card">
+            <span class="category-label" data-i18n="bags">Bags</span>
+            <span class="category-open-indicator" aria-hidden="true">↗</span>
+          </button>
+          <button class="category-card category-trigger" id="category-pouches" type="button" role="tab" data-product-trigger aria-selected="false" aria-controls="pouch-product-panel" tabindex="-1">
             <span class="category-art" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="12" y="20" width="40" height="32" rx="10"></rect><path d="M16 26h32"></path><circle cx="32" cy="36" r="3"></circle></svg></span>
-            <h3 data-i18n="pouches">Pouches</h3>
-          </article>
-          <article class="category-card">
+            <span class="category-label" data-i18n="pouches">Pouches</span>
+            <span class="category-open-indicator" aria-hidden="true">↗</span>
+          </button>
+          <button class="category-card category-trigger" id="category-coasters" type="button" role="tab" data-product-trigger aria-selected="false" aria-controls="coaster-product-panel" tabindex="-1">
             <span class="category-art" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="34" r="19"></circle><circle cx="32" cy="34" r="12"></circle><path d="M32 15v38M13 34h38"></path></svg></span>
-            <h3 data-i18n="coasters">Coasters</h3>
-          </article>
-          <article class="category-card">
+            <span class="category-label" data-i18n="coasters">Coasters</span>
+            <span class="category-open-indicator" aria-hidden="true">↗</span>
+          </button>
+          <button class="category-card category-trigger" id="category-punch-needle" type="button" role="tab" data-product-trigger aria-selected="false" aria-controls="punch-needle-product-panel" tabindex="-1">
             <span class="category-art" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"></circle><path d="M20 39c3-14 21-14 24 0M24 26l4 5 4-8 5 8 4-5"></path></svg></span>
-            <h3 data-i18n="punchNeedle">Punch Needle</h3>
+            <span class="category-label" data-i18n="punchNeedle">Punch Needle</span>
+            <span class="category-open-indicator" aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div class="product-panel" id="bag-product-panel" role="tabpanel" aria-labelledby="category-bags" tabindex="0" data-product-panel hidden>
+          <article class="product-feature" aria-labelledby="bag-product-title">
+            <div class="product-photo-frame is-bag">
+
+              <button class="product-image-button" type="button" data-product-image>
+
+                <img src="assets/min-so-black-handbag.png" alt="Min-So black handbag" data-alt-i18n="bagImageAlt" width="2080" height="3592" loading="lazy" decoding="async">
+
+                <span class="product-image-hint" data-i18n="productViewImage">View larger image</span>
+
+              </button>
+
+            </div>
+            <div class="product-content">
+              <p class="product-kicker" data-i18n="bags">Bags</p>
+              <h3 id="bag-product-title" data-i18n="bagTitle">Handbag</h3>
+              <div class="product-specs">
+                <div class="product-spec"><span data-i18n="productDimensions">Dimensions</span><strong dir="ltr"><bdi data-bag-dimensions-value>30 × 8 × 36</bdi> <span data-i18n="productCentimeters">cm</span></strong></div>
+                <div class="product-spec"><span data-i18n="bagAvailableColor">Available color</span><strong class="product-available-color"><span class="product-color-swatch is-black" aria-hidden="true"></span><span data-i18n="productBlack">Black</span></strong></div>
+              </div>
+              <div class="product-price"><span data-i18n="productPrice">Price</span><strong><bdi data-bag-price-value dir="ltr">295</bdi> <span data-i18n="productCurrency">EGP</span></strong></div>
+              <a class="product-order" data-bag-order target="_blank" rel="noopener noreferrer"><span data-i18n="productOrder">Order on WhatsApp</span><span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+        <div class="product-panel" id="pouch-product-panel" role="tabpanel" aria-labelledby="category-pouches" tabindex="0" data-product-panel hidden>
+          <article class="product-feature" aria-labelledby="pouch-product-title">
+            <div class="product-photo-frame">
+
+              <button class="product-image-button" type="button" data-product-image>
+
+                <img src="assets/min-so-xl-pouches-black-white.png" alt="Min-So XL pouches in black and white" data-alt-i18n="productImageAlt" width="1884" height="2351" loading="lazy" decoding="async">
+
+                <span class="product-image-hint" data-i18n="productViewImage">View larger image</span>
+
+              </button>
+
+            </div>
+            <div class="product-content">
+              <p class="product-kicker" data-i18n="pouches">Pouches</p>
+              <h3 id="pouch-product-title" data-i18n="productTitle">XL Pouch</h3>
+              <div class="product-specs">
+                <div class="product-spec"><span data-i18n="productSize">Size</span><strong data-product-size-value dir="ltr">XL</strong></div>
+                <div class="product-spec"><span data-i18n="productDimensions">Dimensions</span><strong dir="ltr"><bdi data-product-dimensions-value>20 × 8 × 11</bdi> <span data-i18n="productCentimeters">cm</span></strong></div>
+              </div>
+              <div class="product-price"><span data-i18n="productPrice">Price</span><strong><bdi data-product-price-value dir="ltr">205</bdi> <span data-i18n="productCurrency">EGP</span></strong></div>
+              <div class="product-color-choice">
+                <p class="product-color-title" data-i18n="productChooseColor">Choose your color</p>
+                <div class="product-color-options" role="group" aria-label="Available colors" data-product-color-group>
+                  <button class="product-color-option" type="button" data-product-color="black" aria-pressed="false"><span class="product-color-swatch is-black" aria-hidden="true"></span><span data-i18n="productBlack">Black</span></button>
+                  <button class="product-color-option" type="button" data-product-color="white" aria-pressed="false"><span class="product-color-swatch is-white" aria-hidden="true"></span><span data-i18n="productWhite">White</span></button>
+                </div>
+                <p class="product-selection" data-product-selection role="status" aria-live="polite">Choose a color to order</p>
+              </div>
+              <a class="product-order" data-product-order aria-disabled="true" tabindex="-1" target="_blank" rel="noopener noreferrer"><span data-i18n="productOrder">Order on WhatsApp</span><span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+        <div class="product-panel" id="coaster-product-panel" role="tabpanel" aria-labelledby="category-coasters" tabindex="0" data-product-panel hidden>
+          <div class="empty-category">
+            <p class="product-kicker" data-i18n="coasters">Coasters</p>
+            <h3 data-i18n="emptyCategory">No products are displayed here yet.</h3>
+          </div>
+        </div>
+        <div class="product-panel" id="punch-needle-product-panel" role="tabpanel" aria-labelledby="category-punch-needle" tabindex="0" data-product-panel hidden>
+          <article class="product-feature" aria-labelledby="cushion-ramadanNights-title">
+            <div class="product-photo-frame">
+
+              <button class="product-image-button" type="button" data-product-image>
+
+                <img src="assets/min-so-cushion-ramadan-nights.png" alt="White punch needle cushion with Ramadan Kareem lettering, lantern, crescent and star" data-alt-i18n="ramadanNightsAlt" loading="lazy" decoding="async">
+
+                <span class="product-image-hint" data-i18n="productViewImage">View larger image</span>
+
+              </button>
+
+            </div>
+            <div class="product-content">
+              <p class="product-kicker" data-i18n="punchNeedle">Cushions — Punch Needle</p>
+              <h3 id="cushion-ramadanNights-title" data-i18n="ramadanNights">Ramadan Nights</h3>
+              <div class="product-price"><span data-i18n="productPrice">Price</span><strong><bdi dir="ltr">350</bdi> <span data-i18n="productCurrency">EGP</span></strong></div>
+              <a class="product-order" data-cushion-order="ramadanNights" target="_blank" rel="noopener noreferrer"><span data-i18n="productOrder">Order on WhatsApp</span><span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="product-feature" aria-labelledby="cushion-moonStars-title">
+            <div class="product-photo-frame">
+
+              <button class="product-image-button" type="button" data-product-image>
+
+                <img src="assets/min-so-cushion-moon-and-stars.png" alt="White punch needle cushion with a white crescent and golden stars" data-alt-i18n="moonStarsAlt" loading="lazy" decoding="async">
+
+                <span class="product-image-hint" data-i18n="productViewImage">View larger image</span>
+
+              </button>
+
+            </div>
+            <div class="product-content">
+              <p class="product-kicker" data-i18n="punchNeedle">Cushions — Punch Needle</p>
+              <h3 id="cushion-moonStars-title" data-i18n="moonStars">Moon and Stars</h3>
+              <div class="product-price"><span data-i18n="productPrice">Price</span><strong><bdi dir="ltr">350</bdi> <span data-i18n="productCurrency">EGP</span></strong></div>
+              <a class="product-order" data-cushion-order="moonStars" target="_blank" rel="noopener noreferrer"><span data-i18n="productOrder">Order on WhatsApp</span><span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="product-feature" aria-labelledby="cushion-crescentLantern-title">
+            <div class="product-photo-frame">
+
+              <button class="product-image-button" type="button" data-product-image>
+
+                <img src="assets/min-so-cushion-crescent-and-lantern.png" alt="White punch needle cushion with a yellow crescent, orange lantern and Ramadan Kareem lettering" data-alt-i18n="crescentLanternAlt" loading="lazy" decoding="async">
+
+                <span class="product-image-hint" data-i18n="productViewImage">View larger image</span>
+
+              </button>
+
+            </div>
+            <div class="product-content">
+              <p class="product-kicker" data-i18n="punchNeedle">Cushions — Punch Needle</p>
+              <h3 id="cushion-crescentLantern-title" data-i18n="crescentLantern">Crescent and Lantern</h3>
+              <div class="product-price"><span data-i18n="productPrice">Price</span><strong><bdi dir="ltr">350</bdi> <span data-i18n="productCurrency">EGP</span></strong></div>
+              <a class="product-order" data-cushion-order="crescentLantern" target="_blank" rel="noopener noreferrer"><span data-i18n="productOrder">Order on WhatsApp</span><span aria-hidden="true">↗</span></a>
+            </div>
           </article>
         </div>
       </section>

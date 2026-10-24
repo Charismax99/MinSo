@@ -18,10 +18,36 @@ const translations = {
     aboutBody: "Handmade pieces created with care, from the first stitch to the final touch.",
     madeForYou: "Made for you",
     categoriesTitle: "Find your favourite piece",
+    categoryTabList: "Product categories",
+    emptyCategory: "No products are displayed here yet.",
+    bagTitle: "Handbag",
+    bagImageAlt: "Min-So black handbag",
+    bagAvailableColor: "Available color",
+    productTitle: "XL Pouch",
+    productImageAlt: "Min-So XL pouches in black and white",
+    productSize: "Size",
+    productDimensions: "Dimensions",
+    productCentimeters: "cm",
+    productPrice: "Price",
+    productCurrency: "EGP",
+    productChooseColor: "Choose your color",
+    productColorGroup: "Available colors",
+    productBlack: "Black",
+    productWhite: "White",
+    productSelectColor: "Choose a color to order",
+    productSelectedColor: "Selected color:",
+    productOrder: "Order on WhatsApp",
+    productViewImage: "View larger image",
     bags: "Bags",
     pouches: "Pouches",
     coasters: "Coasters",
-    punchNeedle: "Punch Needle",
+    punchNeedle: "Cushions — Punch Needle",
+    ramadanNights: "Ramadan Nights",
+    moonStars: "Moon and Stars",
+    crescentLantern: "Crescent and Lantern",
+    ramadanNightsAlt: "White punch needle cushion with Ramadan Kareem lettering, lantern, crescent and star",
+    moonStarsAlt: "White punch needle cushion with a white crescent and golden stars",
+    crescentLanternAlt: "White punch needle cushion with a yellow crescent, orange lantern and Ramadan Kareem lettering",
     fromOurHands: "From our hands",
     galleryTitle: "A peek at what we make",
     galleryAltOne: "Min-So handmade canvas tote with a warm orange sun design",
@@ -56,10 +82,36 @@ const translations = {
     aboutBody: "قطع هاند ميد معمولة بحب واهتمام بكل تفصيلة، من أول غرزة لآخر لمسة.",
     madeForYou: "معمولالك",
     categoriesTitle: "اختاري القطعة اللي شبهك",
+    categoryTabList: "فئات المنتجات",
+    emptyCategory: "لا توجد منتجات معروضة هنا حاليًا.",
+    bagTitle: "شنطة يد",
+    bagImageAlt: "شنطة يد سوداء من Min-So",
+    bagAvailableColor: "اللون المتاح",
+    productTitle: "باوتش XL",
+    productImageAlt: "باوتشات Min-So بحجم XL باللونين الأسود والأبيض",
+    productSize: "الحجم",
+    productDimensions: "الأبعاد",
+    productCentimeters: "سم",
+    productPrice: "السعر",
+    productCurrency: "جنيه مصري",
+    productChooseColor: "اختاري اللون",
+    productColorGroup: "الألوان المتاحة",
+    productBlack: "أسود",
+    productWhite: "أبيض",
+    productSelectColor: "اختاري لونًا لإتمام الطلب",
+    productSelectedColor: "اللون المختار:",
+    productOrder: "اطلبي عبر واتساب",
+    productViewImage: "افتحي الصورة بحجم أكبر",
     bags: "شنط",
     pouches: "باوتشات",
     coasters: "كوسترات",
-    punchNeedle: "بانش نيدل",
+    punchNeedle: "كوشنز — بانش نيدل",
+    ramadanNights: "ليالي رمضان",
+    moonStars: "قمر ونجوم",
+    crescentLantern: "هلال وفانوس",
+    ramadanNightsAlt: "كوشن بانش نيدل أبيض برسمة رمضان كريم وفانوس وهلال ونجمة",
+    moonStarsAlt: "كوشن بانش نيدل أبيض بهلال أبيض ونجوم ذهبية",
+    crescentLanternAlt: "كوشن بانش نيدل أبيض برسمة هلال أصفر وفانوس برتقالي وعبارة رمضان كريم",
     fromOurHands: "من إيدينا",
     galleryTitle: "لمحة من شغلنا",
     galleryAltOne: "شنطة كانفاس هاند ميد من مين سو برسمة شمس برتقالية دافية",
@@ -87,12 +139,27 @@ const languageButton = document.querySelector(".language-toggle");
 const languageLabel = document.querySelector("[data-language-label]");
 const whatsappLink = document.querySelector("[data-whatsapp-link]");
 const toast = document.querySelector("[data-toast]");
+const productTriggers = [...document.querySelectorAll("[data-product-trigger]")];
+const productPanels = [...document.querySelectorAll("[data-product-panel]")];
+productPanels.forEach((panel) => {
+  const productCount = [...panel.children].filter((child) => child.classList.contains("product-feature")).length;
+  panel.classList.toggle("has-multiple-products", productCount > 1);
+});
+const categoryTabList = document.querySelector("[data-category-tablist]");
+const bagOrder = document.querySelector("[data-bag-order]");
+const cushionOrders = [...document.querySelectorAll("[data-cushion-order]")];
+const productColorGroup = document.querySelector("[data-product-color-group]");
+const productColorOptions = [...document.querySelectorAll("[data-product-color]")];
+const productSelection = document.querySelector("[data-product-selection]");
+const productOrder = document.querySelector("[data-product-order]");
+let selectedProductColor = null;
 let currentLanguage = /^ar\b/i.test(navigator.language) ? "ar" : "en";
 let toastTimer;
 
 const galleryViewport = document.querySelector("[data-gallery-viewport]");
 const galleryItems = [...document.querySelectorAll(".gallery-item")];
 const galleryImages = [...document.querySelectorAll(".gallery-item img")];
+const productImageButtons = [...document.querySelectorAll("[data-product-image]")];
 const galleryOpenButtons = [...document.querySelectorAll("[data-gallery-index]")];
 const galleryPrevious = document.querySelector("[data-gallery-previous]");
 const galleryNext = document.querySelector("[data-gallery-next]");
@@ -115,6 +182,7 @@ const lightboxPrevious = document.querySelector("[data-lightbox-previous]");
 const lightboxNext = document.querySelector("[data-lightbox-next]");
 let activeGalleryIndex = 0;
 let lightboxIndex = 0;
+let lightboxImages = galleryImages;
 let galleryScrollFrame;
 let lightboxCloseTimer;
 let lastFocusedElement;
@@ -134,7 +202,7 @@ function updateGalleryLabels() {
   galleryNext.setAttribute("aria-label", copy.galleryNext);
   galleryViewport.setAttribute("aria-label", copy.galleryViewport);
   galleryPagination.setAttribute("aria-label", copy.galleryPagination);
-  lightbox.setAttribute("aria-label", copy.lightboxLabel);
+  lightbox.setAttribute("aria-label", lightboxImages === galleryImages ? copy.lightboxLabel : copy.productViewImage);
   lightboxClose.setAttribute("aria-label", copy.lightboxClose);
   lightboxPrevious.setAttribute("aria-label", copy.lightboxPrevious);
   lightboxNext.setAttribute("aria-label", copy.lightboxNext);
@@ -160,8 +228,112 @@ function setLanguage(language) {
   languageLabel.textContent = language === "ar" ? "الإنجليزية" : "Arabic";
   languageButton.setAttribute("aria-label", language === "ar" ? "Switch to English" : "Switch to Arabic");
   document.title = language === "ar" ? "Min-So | هاند ميد بحب" : "Min-So | Handmade with Love";
+  categoryTabList.setAttribute("aria-label", translations[language].categoryTabList);
+  productTriggers.forEach((trigger) => { trigger.disabled = false; });
+  selectCategory(0, false);
   updateGalleryLabels();
+  updateProductSelection();
+  updateBagOrder();
+  updateCushionOrders();
 }
+
+function updateProductSelection() {
+  const copy = translations[currentLanguage];
+  productColorGroup.setAttribute("aria-label", copy.productColorGroup);
+  productColorOptions.forEach((option) => {
+    option.setAttribute("aria-pressed", String(option.dataset.productColor === selectedProductColor));
+  });
+
+  if (!selectedProductColor) {
+    productSelection.textContent = copy.productSelectColor;
+    productOrder.removeAttribute("href");
+    productOrder.setAttribute("aria-disabled", "true");
+    productOrder.tabIndex = -1;
+    return;
+  }
+
+  const colorName = copy[selectedProductColor === "black" ? "productBlack" : "productWhite"];
+  productSelection.textContent = `${copy.productSelectedColor} ${colorName}`;
+  const size = document.querySelector("[data-product-size-value]").textContent.trim();
+  const dimensions = document.querySelector("[data-product-dimensions-value]").textContent.trim();
+  const price = document.querySelector("[data-product-price-value]").textContent.trim();
+  const message = currentLanguage === "ar"
+    ? `مرحبًا Min-So، أريد طلب ${copy.productTitle} باللون ${colorName}. الحجم: ${size}، الأبعاد: ${dimensions} ${copy.productCentimeters}، السعر: ${price} ${copy.productCurrency}.`
+    : `Hello Min-So, I'd like to order the ${copy.productTitle} in ${colorName}. Size: ${size}, dimensions: ${dimensions} ${copy.productCentimeters}, price: ${price} ${copy.productCurrency}.`;
+  const orderUrl = new URL(WHATSAPP_URL);
+  orderUrl.searchParams.set("text", message);
+  productOrder.href = orderUrl.toString();
+  productOrder.setAttribute("aria-disabled", "false");
+  productOrder.tabIndex = 0;
+}
+
+function updateBagOrder() {
+  const copy = translations[currentLanguage];
+  const dimensions = document.querySelector("[data-bag-dimensions-value]").textContent.trim();
+  const price = document.querySelector("[data-bag-price-value]").textContent.trim();
+  const message = currentLanguage === "ar"
+    ? `مرحبًا Min-So، أريد طلب ${copy.bagTitle} باللون ${copy.productBlack}. الأبعاد: ${dimensions} ${copy.productCentimeters}، السعر: ${price} ${copy.productCurrency}.`
+    : `Hello Min-So, I'd like to order the ${copy.bagTitle} in ${copy.productBlack}. Dimensions: ${dimensions} ${copy.productCentimeters}, price: ${price} ${copy.productCurrency}.`;
+  const orderUrl = new URL(WHATSAPP_URL);
+  orderUrl.searchParams.set("text", message);
+  bagOrder.href = orderUrl.toString();
+}
+
+function updateCushionOrders() {
+  const copy = translations[currentLanguage];
+  cushionOrders.forEach((order) => {
+    const name = copy[order.dataset.cushionOrder];
+    const message = currentLanguage === "ar"
+      ? `مرحبًا Min-So، أريد طلب كوشن «${name}». السعر: 350 ${copy.productCurrency}.`
+      : `Hello Min-So, I'd like to order the "${name}" cushion. Price: 350 ${copy.productCurrency}.`;
+    const orderUrl = new URL(WHATSAPP_URL);
+    orderUrl.searchParams.set("text", message);
+    order.href = orderUrl.toString();
+  });
+}
+
+function selectCategory(index, scrollToPanel) {
+  let activePanel;
+  productTriggers.forEach((trigger, triggerIndex) => {
+    const selected = triggerIndex === index;
+    trigger.setAttribute("aria-selected", String(selected));
+    trigger.tabIndex = selected ? 0 : -1;
+    const panel = document.getElementById(trigger.getAttribute("aria-controls"));
+    panel.hidden = !selected;
+    if (selected) activePanel = panel;
+  });
+  if (scrollToPanel && matchMedia("(max-width: 51.99rem)").matches) {
+    activePanel.scrollIntoView({
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    });
+  }
+}
+
+productTriggers.forEach((trigger, index) => {
+  trigger.addEventListener("click", () => {
+    if (!trigger.disabled) selectCategory(index, true);
+  });
+  trigger.addEventListener("keydown", (event) => {
+    if (trigger.disabled) return;
+    let nextIndex;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = productTriggers.length - 1;
+    if (event.key === "ArrowLeft") nextIndex = (index + 1) % productTriggers.length;
+    if (event.key === "ArrowRight") nextIndex = (index - 1 + productTriggers.length) % productTriggers.length;
+    if (nextIndex === undefined) return;
+    event.preventDefault();
+    selectCategory(nextIndex, false);
+    productTriggers[nextIndex].focus();
+  });
+});
+
+productColorOptions.forEach((option) => {
+  option.addEventListener("click", () => {
+    selectedProductColor = option.dataset.productColor;
+    updateProductSelection();
+  });
+});
 
 function showToast(message) {
   clearTimeout(toastTimer);
@@ -216,16 +388,20 @@ galleryViewport.addEventListener("keydown", (event) => {
 });
 
 function updateLightbox(index, animate = true) {
-  lightboxIndex = (index + galleryImages.length) % galleryImages.length;
+  lightboxIndex = (index + lightboxImages.length) % lightboxImages.length;
   if (animate) lightboxImage.classList.add("is-changing");
-  lightboxImage.src = galleryImages[lightboxIndex].currentSrc || galleryImages[lightboxIndex].src;
-  lightboxImage.alt = galleryImages[lightboxIndex].alt;
-  lightboxCounter.textContent = `${localizedNumber(lightboxIndex + 1)} / ${localizedNumber(galleryImages.length)}`;
+  lightboxImage.src = lightboxImages[lightboxIndex].currentSrc || lightboxImages[lightboxIndex].src;
+  lightboxImage.alt = lightboxImages[lightboxIndex].alt;
+  lightboxCounter.textContent = `${localizedNumber(lightboxIndex + 1)} / ${localizedNumber(lightboxImages.length)}`;
   requestAnimationFrame(() => lightboxImage.classList.remove("is-changing"));
 }
 
-function openLightbox(index, opener) {
+function openLightbox(index, opener, images = galleryImages) {
   clearTimeout(lightboxCloseTimer);
+  lightboxImages = images;
+  lightbox.setAttribute("aria-label", images === galleryImages ? translations[currentLanguage].lightboxLabel : translations[currentLanguage].productViewImage);
+  lightboxPrevious.hidden = images.length < 2;
+  lightboxNext.hidden = images.length < 2;
   lastFocusedElement = opener;
   updateLightbox(index, false);
   lightbox.hidden = false;
@@ -250,6 +426,12 @@ function closeLightbox() {
 
 galleryOpenButtons.forEach((button, index) => {
   button.addEventListener("click", () => openLightbox(index, button));
+});
+productImageButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const buttons = [...button.closest("[data-product-panel]").querySelectorAll("[data-product-image]")];
+    openLightbox(buttons.indexOf(button), button, buttons.map((item) => item.querySelector("img")));
+  });
 });
 
 lightboxClose.addEventListener("click", closeLightbox);
@@ -280,7 +462,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") updateLightbox(lightboxIndex - 1);
   if (event.key === "ArrowRight") updateLightbox(lightboxIndex + 1);
   if (event.key === "Tab") {
-    const focusable = [lightboxClose, lightboxPrevious, lightboxNext];
+    const focusable = [lightboxClose, lightboxPrevious, lightboxNext].filter((control) => !control.hidden);
     const currentIndex = focusable.indexOf(document.activeElement);
     const nextIndex = event.shiftKey
       ? (currentIndex - 1 + focusable.length) % focusable.length
