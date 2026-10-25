@@ -125,21 +125,17 @@ a { color: inherit; }
   background: radial-gradient(circle, rgba(223, 195, 163, 0.32), transparent 68%);
   animation-delay: -9s;
 }
-.hero-thread { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke-linecap: round; }
-.hero-thread-mobile { display: none; }
-.hero-thread-ornaments { stroke: rgba(143, 95, 74, 0.55); stroke-width: 1.8; }
-.hero-thread-ornaments circle { stroke-dasharray: 2 5; }
-.hero-thread-ornaments path { animation: hero-ornament-breathe 6s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
-@keyframes hero-ornament-breathe { to { transform: scale(1.2) rotate(16deg); } }
-.hero-thread-base { stroke: rgba(143, 95, 74, 0.29); stroke-width: 1.7; }
-.hero-thread-trace {
-  stroke: rgba(143, 95, 74, 0.61);
-  stroke-width: 2.1;
-  stroke-dasharray: 150 850;
-  animation: hero-thread-flow 24s linear infinite;
+.hero-decoration {
+  position: absolute;
+  display: block;
+  width: clamp(5rem, 13vw, 11rem);
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
 }
+.hero-decoration-botanical { top: 29%; left: clamp(0.5rem, 5vw, 5rem); }
+.hero-decoration-hoop { top: 27%; right: clamp(0.5rem, 5vw, 5rem); width: clamp(5rem, 13vw, 11rem); }
 @keyframes hero-glow-drift { to { transform: translate(7%, 5%) scale(1.08); } }
-@keyframes hero-thread-flow { to { stroke-dashoffset: -1000; } }
 
 .hero::before {
   content: "";
@@ -322,6 +318,31 @@ h2 {
 .category-art svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .category-card h3, .category-label { display: block; margin: 0.6rem 0 0; font-size: 0.94rem; font-weight: 600; }
 
+/* Stagger the product section as it enters the viewport. */
+.js .categories .section-heading,
+.js .categories .category-card {
+  opacity: 0;
+  transform: translateY(1.2rem);
+  transition: opacity 560ms ease, transform 700ms cubic-bezier(.2,.7,.2,1), background-color 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+.js .categories .section-heading { transition-delay: 0ms; }
+.js .categories .category-card { --scroll-delay: 100ms; transition-delay: var(--scroll-delay); }
+.js .categories .category-card:nth-child(2) { --scroll-delay: 185ms; }
+.js .categories .category-card:nth-child(3) { --scroll-delay: 270ms; }
+.js .categories .category-card:nth-child(4) { --scroll-delay: 355ms; }
+.js .categories.is-visible .section-heading,
+.js .categories.is-visible .category-card { opacity: 1; }
+.js .categories.is-visible .category-card:not(:hover):not([aria-selected="true"]) { transform: translateY(0); }
+.js .categories.is-visible .category-card:hover,
+.js .categories.is-visible .category-card[aria-selected="true"] { transform: translateY(-3px); }
+.js .categories.is-visible .category-card { transition-delay: 0ms; }
+.js .categories .category-art {
+  transform: scale(0.88);
+  transition: transform 650ms cubic-bezier(.2,.7,.2,1);
+  transition-delay: calc(var(--scroll-delay, 0ms) + 65ms);
+}
+.js .categories.is-visible .category-art { transform: scale(1); }
+
 .product-panel { margin-top: 1.4rem; scroll-margin-top: 1rem; }
 .product-panel[hidden] { display: none; }
 .product-panel:not([hidden]) { animation: product-panel-enter 280ms cubic-bezier(.2,.7,.2,1) both; }
@@ -351,7 +372,7 @@ h2 {
 .product-photo-frame.is-bag img { object-fit: contain; }
 .product-content { min-width: 0; padding: clamp(1.5rem, 4vw, 3rem); display: flex; flex-direction: column; justify-content: center; }
 .product-kicker { margin: 0 0 0.4rem; color: var(--brown-soft); font: 700 0.78rem/1.4 Arial, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; }
-.product-content h3 { margin: 0 0 1.5rem; font-size: clamp(2.25rem, 5vw, 3.6rem); font-weight: 500; line-height: 1.08; }
+.product-content h3 { margin: 0 0 1.5rem; font-size: 1.65rem; font-weight: 500; line-height: 1.25; }
 .product-specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; }
 .product-spec { min-width: 0; padding: 0.9rem 1rem; display: grid; gap: 0.3rem; border: 1px solid var(--line); border-radius: 1rem; background: #fbf6f1; }
 .product-spec > span, .product-price > span { color: var(--brown-soft); font: 600 0.76rem/1.3 Arial, sans-serif; }
@@ -704,6 +725,17 @@ body.lightbox-open { overflow: hidden; }
 
 .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 600ms ease, transform 600ms cubic-bezier(.2,.7,.2,1); }
 .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
+.js .categories .product-feature.reveal { transition-delay: 90ms; }
+.js .categories .product-feature.reveal.is-visible .product-image-button img {
+  transform: scale(1);
+}
+.js .categories .product-feature.reveal .product-image-button img {
+  transform: scale(1.035);
+  transition: transform 950ms cubic-bezier(.2,.7,.2,1);
+  transition-delay: 90ms;
+}
+.js .categories .product-feature.reveal.is-visible .product-image-button:hover img,
+.js .categories .product-feature.reveal.is-visible .product-image-button:focus-visible img { transform: scale(1.045); }
 
 html[dir="rtl"] body,
 html[dir="rtl"] body :where(p, h1, h2, h3, a, button, span, strong, small) {
@@ -796,10 +828,16 @@ html[dir="rtl"] .social-handle { justify-self: end; }
   .hero-glow { width: 22rem; opacity: 0.8; }
   .hero-glow-left { top: 3%; left: -38%; background: radial-gradient(circle, rgba(223, 180, 169, 0.38), transparent 68%); }
   .hero-glow-right { right: -40%; bottom: -8%; background: radial-gradient(circle, rgba(223, 195, 163, 0.38), transparent 68%); }
-  .hero-thread:not(.hero-thread-mobile) { display: none; }
-  .hero-thread-mobile { display: block; }
-  .hero-thread-mobile .hero-thread-base { stroke: rgba(143, 95, 74, 0.34); stroke-width: 1.7; }
-  .hero-thread-mobile .hero-thread-trace { stroke: rgba(143, 95, 74, 0.58); stroke-width: 2; animation-duration: 16s; }
+  .hero-decoration-botanical { top: 12%; left: 0.5rem; width: 4rem; }
+  .hero-decoration-hoop { top: 15%; right: 0.5rem; width: 4rem; }
+  .js .categories .section-heading,
+  .js .categories .category-card { transform: translateY(0.75rem); }
+  .js .categories .category-card { --scroll-delay: 70ms; }
+  .js .categories .category-card:nth-child(2) { --scroll-delay: 135ms; }
+  .js .categories .category-card:nth-child(3) { --scroll-delay: 200ms; }
+  .js .categories .category-card:nth-child(4) { --scroll-delay: 265ms; }
+  .js .categories .product-feature.reveal,
+  .js .categories .product-feature.reveal .product-image-button img { transition-delay: 70ms; }
   .product-content { padding: 1.5rem 1.2rem 1.7rem; }
   .product-spec { padding: 0.75rem; }
   .product-spec strong { font-size: 0.88rem; }
@@ -810,4 +848,9 @@ html[dir="rtl"] .social-handle { justify-self: end; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .js .categories .section-heading,
+  .js .categories .category-card,
+  .js .categories .product-feature.reveal,
+  .js .categories .category-art,
+  .js .categories .product-image-button img { transition-delay: 0ms !important; }
 }
