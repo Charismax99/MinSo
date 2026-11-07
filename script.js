@@ -6,6 +6,46 @@ const WHATSAPP_URL = "https://wa.me/201032252236";
 
 const translations = {
   en: {
+    newBag1: "You Decide",
+    newBag1Alt: "Light tote bag with You Decide design",
+    newBag2: "Bubble Tea",
+    newBag2Alt: "Black tote bag with two bubble tea cups",
+    newBag3: "Relax",
+    newBag3Alt: "Light tote bag with Relax lettering",
+    newBag4: "Warm Sunshine",
+    newBag4Alt: "Light tote bag with an orange sun",
+    newBag5: "Good Things Take Time",
+    newBag5Alt: "Black tote bag with colorful Good Things Take Time lettering",
+    newBag6: "Spring Flowers",
+    newBag6Alt: "Light tote bag with colorful flowers",
+    newBag7: "Flower Stitches",
+    newBag7Alt: "Black tote bag with colorful embroidered flowers",
+    newCoaster1: "Love Letter",
+    newCoaster1Alt: "Pink coaster with an envelope and heart",
+    newCoaster2: "Colors of Love",
+    newCoaster2Alt: "Blue coaster with colorful LOVE lettering",
+    newCoaster3: "Coffee Heart",
+    newCoaster3Alt: "Brown coaster with a heart and coffee foam design",
+    newCoaster4: "Autumn Leaf",
+    newCoaster4Alt: "Green coaster with an orange autumn leaf",
+    newCoaster5: "Mushroom House",
+    newCoaster5Alt: "White coaster with a red mushroom",
+    newCoaster6: "Harry Potter — Logo",
+    newCoaster6Alt: "Black coaster with golden letters",
+    newCoaster7: "Paw Print",
+    newCoaster7Alt: "Black coaster with a pink paw print",
+    newCoaster8: "Pink Tulips",
+    newCoaster8Alt: "Purple coaster with pink tulips",
+    newCoaster9: "Cup of Love",
+    newCoaster9Alt: "Green coaster with a cup and red heart",
+    newCoaster10: "Harry Potter",
+    newCoaster10Alt: "Red coaster with a Harry Potter design",
+    newCoaster11: "Autumn Pumpkin",
+    newCoaster11Alt: "Brown coaster with an orange pumpkin",
+    productOffWhite: "Off-white",
+    soldOut: "Sold out",
+    homeCushion: "HOME Cushion",
+    homeCushionAlt: "Cream HOME cushion with colorful punch needle letters and tassels on a sofa",
     eyebrow: "MADE WITH HEART. MADE BY HAND.",
     heroTitle: "Handmade with love",
     heroCopy: "Handmade bags, pouches, punch needle pieces & more.",
@@ -20,7 +60,7 @@ const translations = {
     categoriesTitle: "Find your favourite piece",
     categoryTabList: "Product categories",
     emptyCategory: "No products are displayed here yet.",
-    bagTitle: "Handbag",
+    bagTitle: "Night Garden",
     bagImageAlt: "Min-So black handbag",
     bagAvailableColor: "Available color",
     productTitle: "XL Pouch",
@@ -29,6 +69,9 @@ const translations = {
     productDimensions: "Dimensions",
     productCentimeters: "cm",
     productPrice: "Price",
+    originalPrice: "Original price",
+    salePrice: "Sale price",
+    saleBadge: "Sale %",
     productCurrency: "EGP",
     productChooseColor: "Choose your color",
     productColorGroup: "Available colors",
@@ -38,7 +81,7 @@ const translations = {
     productSelectedColor: "Selected color:",
     productOrder: "Order on WhatsApp",
     productViewImage: "View larger image",
-    bags: "Bags",
+    bags: "Tote Bags",
     pouches: "Pouches",
     coasters: "Coasters",
     punchNeedle: "Cushions — Punch Needle",
@@ -70,6 +113,46 @@ const translations = {
     whatsappToast: "Message us anytime 🤍"
   },
   ar: {
+    newBag1: "إنتِ تقرري",
+    newBag1Alt: "توتي باج فاتحة برسمة وعبارة You decide",
+    newBag2: "بابل تي",
+    newBag2Alt: "توتي باج سوداء برسمة كوبين بابل تي",
+    newBag3: "ريلاكس",
+    newBag3Alt: "توتي باج فاتحة بكلمة Relax",
+    newBag4: "شمس دافية",
+    newBag4Alt: "توتي باج فاتحة برسمة شمس برتقالية",
+    newBag5: "كل حاجة في وقتها",
+    newBag5Alt: "توتي باج سوداء بعبارة Good Things Take Time ملونة",
+    newBag6: "ورد الربيع",
+    newBag6Alt: "توتي باج فاتحة بنقشة ورود ملونة",
+    newBag7: "غرز الورد",
+    newBag7Alt: "توتي باج سوداء بزهور مطرزة ملونة",
+    newCoaster1: "رسالة حب",
+    newCoaster1Alt: "كوستر وردي برسمة ظرف وقلب",
+    newCoaster2: "ألوان الحب",
+    newCoaster2Alt: "كوستر أزرق بكلمة حب ملونة",
+    newCoaster3: "قلب القهوة",
+    newCoaster3Alt: "كوستر بني برسمة قلب ورغوة قهوة",
+    newCoaster4: "ورقة خريف",
+    newCoaster4Alt: "كوستر أخضر بورقة خريف برتقالية",
+    newCoaster5: "بيت الفطر",
+    newCoaster5Alt: "كوستر أبيض برسمة فطر أحمر",
+    newCoaster6: "هاري بوتر — الشعار",
+    newCoaster6Alt: "كوستر أسود بحروف ذهبية",
+    newCoaster7: "بصمة كف",
+    newCoaster7Alt: "كوستر أسود ببصمة كف وردية",
+    newCoaster8: "توليب وردي",
+    newCoaster8Alt: "كوستر بنفسجي بزهرتي توليب ورديتين",
+    newCoaster9: "فنجان حب",
+    newCoaster9Alt: "كوستر أخضر بفنجان وقلب أحمر",
+    newCoaster10: "هاري بوتر",
+    newCoaster10Alt: "كوستر أحمر برسمة هاري بوتر",
+    newCoaster11: "يقطينة الخريف",
+    newCoaster11Alt: "كوستر بني برسمة يقطينة برتقالية",
+    productOffWhite: "أوف وايت",
+    soldOut: "نفد المخزون",
+    homeCushion: "كوشن HOME",
+    homeCushionAlt: "كوشن كريمي بكلمة HOME مطرزة بألوان مختلفة وشرابات على انتريه",
     eyebrow: "معمولة بحب.. وبإيدينا. 🤍",
     heroTitle: "هاند ميد بحب",
     heroCopy: "شنط، باوتشات، بانش نيدل وحاجات هاند ميد أكتر.",
@@ -84,7 +167,7 @@ const translations = {
     categoriesTitle: "اختاري القطعة اللي شبهك",
     categoryTabList: "فئات المنتجات",
     emptyCategory: "لا توجد منتجات معروضة هنا حاليًا.",
-    bagTitle: "شنطة يد",
+    bagTitle: "حديقة الليل",
     bagImageAlt: "شنطة يد سوداء من Min-So",
     bagAvailableColor: "اللون المتاح",
     productTitle: "باوتش XL",
@@ -93,6 +176,9 @@ const translations = {
     productDimensions: "الأبعاد",
     productCentimeters: "سم",
     productPrice: "السعر",
+    originalPrice: "السعر الأصلي",
+    salePrice: "سعر العرض",
+    saleBadge: "عرض ٪",
     productCurrency: "جنيه مصري",
     productChooseColor: "اختاري اللون",
     productColorGroup: "الألوان المتاحة",
@@ -102,7 +188,7 @@ const translations = {
     productSelectedColor: "اللون المختار:",
     productOrder: "اطلبي عبر واتساب",
     productViewImage: "افتحي الصورة بحجم أكبر",
-    bags: "شنط",
+    bags: "توتي باج",
     pouches: "باوتشات",
     coasters: "كوسترات",
     punchNeedle: "كوشنز — بانش نيدل",
@@ -142,7 +228,7 @@ const toast = document.querySelector("[data-toast]");
 const productTriggers = [...document.querySelectorAll("[data-product-trigger]")];
 const productPanels = [...document.querySelectorAll("[data-product-panel]")];
 productPanels.forEach((panel) => {
-  const productCount = [...panel.children].filter((child) => child.classList.contains("product-feature")).length;
+  const productCount = panel.querySelectorAll(".product-feature:not([hidden])").length;
   panel.classList.toggle("has-multiple-products", productCount > 1);
 });
 const categoryTabList = document.querySelector("[data-category-tablist]");
@@ -217,6 +303,8 @@ function updateGalleryLabels() {
 
 function setLanguage(language) {
   currentLanguage = language;
+  const bagPanel = document.querySelector("#bag-product-panel");
+  bagPanel.classList.toggle("has-multiple-products", bagPanel.querySelectorAll(".product-feature:not([hidden])").length > 1);
   document.documentElement.lang = language;
   document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
   document.querySelectorAll("[data-i18n]").forEach((element) => {
@@ -235,6 +323,7 @@ function setLanguage(language) {
   updateProductSelection();
   updateBagOrder();
   updateCushionOrders();
+  updateLocalizedProductOrders();
 }
 
 function updateProductSelection() {
@@ -289,6 +378,28 @@ function updateCushionOrders() {
     const orderUrl = new URL(WHATSAPP_URL);
     orderUrl.searchParams.set("text", message);
     order.href = orderUrl.toString();
+  });
+}
+
+function updateLocalizedProductOrders() {
+  const copy = translations[currentLanguage];
+  document.querySelectorAll("[data-local-order]").forEach((order) => {
+    const card = order.closest(".product-feature");
+    const name = copy[order.dataset.nameKey];
+    const price = card.querySelector(".product-price bdi").textContent.trim();
+    const type = order.dataset.localOrder;
+    const color = order.dataset.colorKey ? copy[order.dataset.colorKey] : null;
+    let message;
+    if (currentLanguage === "ar") {
+      const product = type === "bag" ? "توتي باج" : type === "coaster" ? "كوستر" : "كوشن";
+      message = `مرحبًا Min-So، أريد طلب ${product} «${name}»${color ? ` باللون ${color}` : ""}. السعر: ${price} ${copy.productCurrency}.`;
+    } else {
+      const product = type === "bag" ? "tote bag" : type === "coaster" ? "coaster" : "cushion";
+      message = `Hello Min-So, I'd like to order the "${name}" ${product}${color ? ` in ${color}` : ""}. Price: ${price} ${copy.productCurrency}.`;
+    }
+    const url = new URL(WHATSAPP_URL);
+    url.searchParams.set("text", message);
+    order.href = url.toString();
   });
 }
 
@@ -429,7 +540,7 @@ galleryOpenButtons.forEach((button, index) => {
 });
 productImageButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const buttons = [...button.closest("[data-product-panel]").querySelectorAll("[data-product-image]")];
+    const buttons = [...button.closest("[data-product-panel]").querySelectorAll("[data-product-image]")].filter((item) => !item.closest("[hidden]"));
     openLightbox(buttons.indexOf(button), button, buttons.map((item) => item.querySelector("img")));
   });
 });
