@@ -535,7 +535,7 @@ html[lang="en"] .product-order { font-family: Georgia, "Times New Roman", serif;
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 620ms ease;
+  transition: opacity 500ms ease;
 }
 
 .custom-order-photo-window img[aria-hidden="false"] {
@@ -544,7 +544,7 @@ html[lang="en"] .product-order { font-family: Georgia, "Times New Roman", serif;
 }
 
 .custom-order-photo-window .is-entering {
-  animation: custom-order-photo-enter 620ms cubic-bezier(.2,.65,.3,1) both;
+  animation: custom-order-photo-enter 500ms cubic-bezier(.2,.65,.3,1) both;
 }
 
 @keyframes custom-order-photo-enter {

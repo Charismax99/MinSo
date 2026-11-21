@@ -376,7 +376,7 @@ function setupCustomOrderSlideshow() {
   function updateTimer() {
     clearInterval(timer);
     if (inView && !paused && !document.hidden) {
-      timer = setInterval(advanceSlide, 4000);
+      timer = setInterval(advanceSlide, 3400);
     }
   }
 
