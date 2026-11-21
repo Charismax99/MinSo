@@ -58,6 +58,14 @@ const translations = {
     aboutBody: "Handmade pieces created with care, from the first stitch to the final touch.",
     madeForYou: "Made for you",
     categoriesTitle: "Find your favourite piece",
+    customOrderKicker: "From your imagination to our hands",
+    customOrderTitle: "Have something in mind?",
+    customOrderDescription: "A colour you love, a name on a tote, or a design you’ve imagined from scratch? Send us a quick description or an inspiration photo, and we’ll explore what we can make for you.",
+    customOrderAction: "Share your idea on WhatsApp",
+    customOrderSketchNote: "Name here?",
+    customOrderPause: "Pause photo slideshow",
+    customOrderPlay: "Play photo slideshow",
+    customOrderMessage: "Hi Min-So! I have an idea for a custom piece. Could we talk about making it? 🤎",
     categoryTabList: "Product categories",
     emptyCategory: "No products are displayed here yet.",
     bagTitle: "Night Garden",
@@ -165,6 +173,14 @@ const translations = {
     aboutBody: "قطع هاند ميد معمولة بحب واهتمام بكل تفصيلة، من أول غرزة لآخر لمسة.",
     madeForYou: "معمولالك",
     categoriesTitle: "اختاري القطعة اللي شبهك",
+    customOrderKicker: "من خيالك لإيدينا",
+    customOrderTitle: "في قطعة في بالك؟",
+    customOrderDescription: "لون نفسك فيه، اسم على شنطة، أو تصميم متخيّلاه من الصفر؟ احكيلنا عنه. ابعتي وصف بسيط أو صورة إلهام، ونشوف معاكي إزاي نقدر ننفّذه.",
+    customOrderAction: "ابعتي فكرتك على واتساب",
+    customOrderSketchNote: "الاسم هنا؟",
+    customOrderPause: "إيقاف عرض الصور",
+    customOrderPlay: "تشغيل عرض الصور",
+    customOrderMessage: "هاي Min-So! عندي فكرة لقطعة مخصوص وحابة أعرف لو ممكن تتنفّذ 🤎",
     categoryTabList: "فئات المنتجات",
     emptyCategory: "لا توجد منتجات معروضة هنا حاليًا.",
     bagTitle: "حديقة الليل",
@@ -224,6 +240,7 @@ const translations = {
 const languageButton = document.querySelector(".language-toggle");
 const languageLabel = document.querySelector("[data-language-label]");
 const whatsappLink = document.querySelector("[data-whatsapp-link]");
+const customOrderLink = document.querySelector("[data-custom-order-link]");
 const toast = document.querySelector("[data-toast]");
 const productTriggers = [...document.querySelectorAll("[data-product-trigger]")];
 const productPanels = [...document.querySelectorAll("[data-product-panel]")];
@@ -313,6 +330,10 @@ function setLanguage(language) {
   document.querySelectorAll("[data-alt-i18n]").forEach((image) => {
     image.alt = translations[language][image.dataset.altI18n];
   });
+  const customOrderUrl = new URL(WHATSAPP_URL);
+  customOrderUrl.searchParams.set("text", translations[language].customOrderMessage);
+  customOrderLink.href = customOrderUrl.toString();
+  updateCustomOrderControl();
   languageLabel.textContent = language === "ar" ? "الإنجليزية" : "Arabic";
   languageButton.setAttribute("aria-label", language === "ar" ? "Switch to English" : "Switch to Arabic");
   document.title = language === "ar" ? "Min-So | هاند ميد بحب" : "Min-So | Handmade with Love";
@@ -324,6 +345,61 @@ function setLanguage(language) {
   updateBagOrder();
   updateCushionOrders();
   updateLocalizedProductOrders();
+}
+
+function setupCustomOrderSlideshow() {
+  const frame = document.querySelector(".custom-order-photo");
+  const slides = [...frame.querySelectorAll(".custom-order-photo-window img")];
+  const control = frame.querySelector("[data-custom-order-photo-control]");
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  let activeIndex = 0;
+  let paused = reducedMotion.matches;
+  let inView = false;
+  let timer;
+
+  function updateControl() {
+    const copy = translations[currentLanguage];
+    control.setAttribute("aria-label", paused ? copy.customOrderPlay : copy.customOrderPause);
+    control.classList.toggle("is-paused", paused);
+  }
+
+  function advanceSlide() {
+    const outgoing = slides[activeIndex];
+    activeIndex = (activeIndex + 1) % slides.length;
+    const incoming = slides[activeIndex];
+    outgoing.classList.remove("is-entering");
+    outgoing.setAttribute("aria-hidden", "true");
+    incoming.setAttribute("aria-hidden", "false");
+    incoming.classList.add("is-entering");
+  }
+
+  function updateTimer() {
+    clearInterval(timer);
+    if (inView && !paused && !document.hidden) {
+      timer = setInterval(advanceSlide, 4000);
+    }
+  }
+
+  control.addEventListener("click", () => {
+    paused = !paused;
+    updateControl();
+    updateTimer();
+  });
+  reducedMotion.addEventListener("change", () => {
+    if (reducedMotion.matches) {
+      paused = true;
+      updateControl();
+      updateTimer();
+    }
+  });
+  document.addEventListener("visibilitychange", updateTimer);
+  new IntersectionObserver(([entry]) => {
+    inView = entry.isIntersecting;
+    updateTimer();
+  }).observe(frame);
+
+  control.hidden = false;
+  return updateControl;
 }
 
 function updateProductSelection() {
@@ -605,4 +681,5 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
 setActiveGalleryItem(0);
+const updateCustomOrderControl = setupCustomOrderSlideshow();
 setLanguage(currentLanguage);

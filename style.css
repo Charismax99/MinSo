@@ -436,6 +436,171 @@ html[lang="en"] .product-order { font-family: Georgia, "Times New Roman", serif;
 .product-panel.has-multiple-products .product-selection { min-height: 1.2rem; margin: 0.55rem 0 0.75rem; font-size: 0.72rem; }
 .product-panel.has-multiple-products .product-order { min-height: 3.1rem; margin-top: auto; padding: 0.7rem 0.9rem; }
 
+.custom-order.section-shell {
+  display: grid;
+  gap: clamp(1.6rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(1.25rem, 5vw, 3.25rem);
+  border: 1px solid var(--line);
+  border-radius: 1.75rem;
+  background: linear-gradient(125deg, var(--paper), #f4e4dc);
+  box-shadow: var(--shadow);
+}
+
+.custom-order-kicker {
+  margin: 0 0 0.6rem;
+  color: var(--brown-soft);
+  font: 700 0.875rem/1.5 Arial, sans-serif;
+}
+
+.custom-order-description {
+  max-width: 33ch;
+  margin: 1rem 0 1.4rem;
+  color: var(--brown);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.custom-order-link { display: inline-flex; }
+.custom-order-link:focus-visible { outline: 2px solid var(--brown); outline-offset: 4px; }
+
+.custom-order-visual {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.14fr);
+  gap: clamp(0.6rem, 2.4vw, 1.4rem);
+  align-items: center;
+  max-width: 29rem;
+  width: 100%;
+  justify-self: center;
+}
+
+.custom-order-visual::before {
+  content: "";
+  position: absolute;
+  inset-inline: 32%;
+  top: 53%;
+  border-top: 2px dashed var(--brown-soft);
+}
+
+.custom-order-sketch,
+.custom-order-photo {
+  position: relative;
+  min-width: 0;
+  border: 1px solid var(--line);
+  box-shadow: 0 9px 18px rgba(102, 56, 38, 0.13);
+}
+
+.custom-order-sketch {
+  padding: 0.65rem 0.45rem;
+  border-radius: 0.25rem;
+  background: repeating-linear-gradient(var(--paper) 0 19px, #f3e7de 19px 20px);
+  text-align: center;
+  transform: rotate(-6deg);
+}
+
+.custom-order-sketch svg {
+  display: block;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.custom-order-sketch span {
+  display: block;
+  font-size: clamp(0.875rem, 2vw, 1.05rem);
+  font-style: italic;
+}
+
+.custom-order-photo {
+  margin: 0;
+  padding: clamp(0.25rem, 1vw, 0.55rem);
+  padding-block-end: clamp(0.6rem, 1.8vw, 1.1rem);
+  border-radius: 0.25rem;
+  background: var(--paper);
+  transform: rotate(5deg);
+}
+
+.custom-order-photo-window {
+  --custom-order-slide-entry: -14%;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.custom-order-photo-window img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 620ms ease;
+}
+
+.custom-order-photo-window img[aria-hidden="false"] {
+  z-index: 1;
+  opacity: 1;
+}
+
+.custom-order-photo-window .is-entering {
+  animation: custom-order-photo-enter 620ms cubic-bezier(.2,.65,.3,1) both;
+}
+
+@keyframes custom-order-photo-enter {
+  from { opacity: 0; transform: translateX(var(--custom-order-slide-entry)); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.custom-order-photo-control {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: 0.95rem;
+  inset-inline-end: 0.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--brown);
+  background: var(--paper);
+  box-shadow: 0 2px 8px rgba(102, 56, 38, 0.2);
+  cursor: pointer;
+}
+
+.custom-order-photo-control:not([hidden]) { display: grid; place-items: center; }
+.custom-order-photo-control:hover { background: var(--cream); }
+.custom-order-photo-control:focus-visible { outline: 2px solid var(--brown); outline-offset: 2px; }
+
+.custom-order-photo-control::before {
+  content: "";
+  box-sizing: border-box;
+  width: 0.625rem;
+  height: 0.75rem;
+  border-inline: 0.1875rem solid currentColor;
+}
+
+.custom-order-photo-control.is-paused::before {
+  width: 0;
+  height: 0;
+  margin-left: 0.125rem;
+  border: solid transparent;
+  border-width: 0.375rem 0 0.375rem 0.625rem;
+  border-left-color: currentColor;
+}
+
+:dir(rtl) .custom-order-sketch { transform: rotate(6deg); }
+:dir(rtl) .custom-order-photo { transform: rotate(-5deg); }
+:dir(rtl) .custom-order-photo-window { --custom-order-slide-entry: 14%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-order-photo-window img { transition: none; }
+  .custom-order-photo-window .is-entering { animation: none; }
+}
+
+@media (min-width: 44rem) {
+  .custom-order { grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr); }
+}
+
 .gallery { padding-top: 3rem; }
 .gallery-carousel {
   position: relative;
