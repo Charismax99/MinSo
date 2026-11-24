@@ -119,6 +119,10 @@ const translations = {
     lightboxNext: "Next image",
     footerLove: "Handmade with love",
     footerPoweredBy: "Powered by:",
+    navLabel: "Quick links",
+    navShop: "Shop",
+    navCustom: "Custom piece",
+    navWhatsApp: "WhatsApp",
     whatsappToast: "Message us anytime 🤍"
   },
   ar: {
@@ -235,6 +239,10 @@ const translations = {
     lightboxNext: "الصورة التالية",
     footerLove: "هاند ميد بحب",
     footerPoweredBy: "بدعم من:",
+    navLabel: "روابط سريعة",
+    navShop: "تسوّق",
+    navCustom: "قطعة مخصوص",
+    navWhatsApp: "واتساب",
     whatsappToast: "راسلينا في أي وقت 🤍"
   }
 };
@@ -251,6 +259,7 @@ productPanels.forEach((panel) => {
   panel.classList.toggle("has-multiple-products", productCount > 1);
 });
 const categoryTabList = document.querySelector("[data-category-tablist]");
+const bottomNav = document.querySelector("[data-bottom-nav]");
 const catalogCards = [...document.querySelectorAll("[data-product-id]")];
 const productOrders = [];
 const productColorGroup = document.querySelector("[data-product-color-group]");
@@ -344,6 +353,7 @@ function setLanguage(language) {
   languageButton.setAttribute("aria-label", language === "ar" ? "Switch to English" : "Switch to Arabic");
   document.title = language === "ar" ? "Min-So | هاند ميد بحب" : "Min-So | Handmade with Love";
   categoryTabList.setAttribute("aria-label", translations[language].categoryTabList);
+  bottomNav.setAttribute("aria-label", translations[language].navLabel);
   productTriggers.forEach((trigger) => { trigger.disabled = false; });
   selectCategory(0, false);
   updateGalleryLabels();
@@ -746,7 +756,7 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.05, rootMargin: "0px 0px 15% 0px" });
 
 document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
 setActiveGalleryItem(0);

@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f6eee7">
+    <meta name="theme-color" content="#f6eee7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#241a14" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light dark">
     <title>Min-So | Handmade with Love</title>
     <meta name="description" content="Discover Min-So handmade bags, pouches, punch needle pieces and more, made with care and love.">
     <link rel="canonical" href="https://minso.shop/">
@@ -22,8 +24,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=custom-order-3">
-    <script src="script.js?v=catalog-data-1" defer></script>
+    <link rel="stylesheet" href="style.css?v=mobile-nav-1">
+    <script src="script.js?v=mobile-nav-1" defer></script>
   </head>
   <body>
     <header class="site-header">
@@ -418,5 +420,19 @@
       <button class="lightbox-control lightbox-next" type="button" data-lightbox-next aria-label="Next image"><span aria-hidden="true">&#8250;</span></button>
     </div>
     <div class="toast" role="status" aria-live="polite" data-toast></div>
+    <nav class="bottom-nav" aria-label="Quick links" data-bottom-nav>
+      <a class="bottom-nav-item" href="#categories-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.2 8h11.6l-1.1 11.1a2 2 0 0 1-2 1.9H9.3a2 2 0 0 1-2-1.9L6.2 8Z"/><path d="M9 10.5V6.5a3 3 0 0 1 6 0v4"/></svg>
+        <span data-i18n="navShop">Shop</span>
+      </a>
+      <a class="bottom-nav-item" href="#custom-order-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5 15 9"/><ellipse cx="17.6" cy="6.4" rx="1.9" ry="3.2" transform="rotate(45 17.6 6.4)"/><path d="M18.6 7.4c2.6 1.2 2.2 3.9 0.6 5.4"/></svg>
+        <span data-i18n="navCustom">Custom piece</span>
+      </a>
+      <a class="bottom-nav-item" href="https://wa.me/201032252236">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3.5 20.5l1.4-4.4a8.4 8.4 0 1 1 15.6-4.4Zm-8.4-6.9a6.8 6.8 0 0 0-5.8 10.4l.3.5-.8 2.4 2.5-.8.5.3a6.8 6.8 0 1 0 3.3-12.8Zm-2 3.3c.1 0 .3 0 .4.3l.7 1.6c.1.2.1.4 0 .5l-.5.7c-.1.1-.2.3 0 .5.4.8 1.1 1.5 1.9 1.9.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .2-.1 1-.6 1.5-.5.5-1.2.7-1.9.5-.8-.2-1.7-.5-2.9-1.6-1-.9-1.8-2-2.2-3.2-.2-.7 0-1.5.5-2 .3-.3.6-.4.8-.4Z"/></svg>
+        <span data-i18n="navWhatsApp">WhatsApp</span>
+      </a>
+    </nav>
   </body>
 </html>
