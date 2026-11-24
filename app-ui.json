@@ -18,7 +18,6 @@
     "assets/min-so-cushion-ramadan-nights.png": "fd23566a921ab02fa09f9e1f91866096a5c9284da8043771568bf7e534d81ee5",
     "assets/min-so-custom-home-cushion.jpg": "76676b1dd22e3adfbb9a344b9be1684003d15891b5da26baedfe390c6473eaa8",
     "assets/min-so-custom-xl-pouches.jpg": "16148ec7bdbce0782d17da877007c738d2a750665f41607b94b3667b48a69044",
-    "assets/min-so-custom-you-decide.jpg": "e019a2d13ecd0e92327160ae9ed8c7a84e3603cf75404fb254ac9aa06ccf729d",
     "assets/min-so-floral-tote.png": "0b780208b468c84e0aa20dcb89e001cf164e3e40850b0f1460f247f16784566a",
     "assets/min-so-good-things-tote.png": "af514807cf5fd5f975ec73e67bae80ba1c51f780035d5f97d4194eea26c90261",
     "assets/min-so-logo.png": "cde12931697508a0893315d0972d395ddf1daa30b228e28f1cff2dd0ba9fa6d5",
@@ -36,10 +35,10 @@
     "assets/min-so-you-decide-tote.jpg": "109d11b3545b2eca707a3c3f45819f0b12798bd3892a91291df020491602af1a",
     "assets/minso-hero-botanical-sprig.png": "9eb94eb584cbabf5df7b3da4e9a93051c919c73c64a4479d029b41c2103aeb07",
     "assets/minso-hero-embroidery-hoop.png": "87f3cb8e1596453462b56a684e364748bbe999298267c32647276e8ab43501de",
-    "index.html": "b9dce13fc9160ec1ea3829fbf684df41c521336767c46768a5520a6054a526a0",
+    "index.html": "175d38a9cab789a96ccc4c2fc4e559dc4fcc23687babd911a49bfcc094b13d34",
     "script.js": "416cbbc3f2ac27031480f9ec79e270029ee4eefae25d18d31d0c1bc7276da86f",
     "style.css": "a1bc84e3d2085e52195aee259f03754d54bf48cf4a7c74f81170273c6d18d899"
   },
   "schema": 1,
-  "version": "6c0491e11b43bf6dc7bdae473ebbe5ea9e08042f27070fdda45ea679a140e7e4"
+  "version": "06f34b8ef6f4e166d8583e697aabff489c8705cd376f6e666d05530b01023cee"
 }
