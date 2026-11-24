@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f6eee7" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#241a14" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f6eee7">
     <meta name="color-scheme" content="light dark">
     <title>Min-So | Handmade with Love</title>
     <meta name="description" content="Discover Min-So handmade bags, pouches, punch needle pieces and more, made with care and love.">
@@ -24,15 +23,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=mobile-nav-1">
-    <script src="script.js?v=mobile-nav-1" defer></script>
+    <link rel="stylesheet" href="style.css?v=theme-1">
+    <script src="script.js?v=theme-1" defer></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand-mark" href="#top" aria-label="Min-So home">
         <img src="assets/min-so-logo.png" alt="Min-So — Punch Needle and Handmade Bags">
       </a>
-      <button class="language-toggle" type="button" aria-label="Switch to Arabic"><span class="language-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.7 2.5 4.1 5.5 4.1 9S14.7 18.5 12 21M12 3C9.3 5.5 7.9 8.5 7.9 12s1.4 6.5 4.1 9"></path></svg></span><span data-language-label>Arabic</span></button>
+      <div class="header-controls">
+        <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" data-theme-toggle hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.9 13.3A8.9 8.9 0 0 1 10.7 3.1 9 9 0 1 0 20.9 13.3Z"/></svg>
+        </button>
+        <button class="language-toggle" type="button" aria-label="Switch to Arabic"><span class="language-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.7 2.5 4.1 5.5 4.1 9S14.7 18.5 12 21M12 3C9.3 5.5 7.9 8.5 7.9 12s1.4 6.5 4.1 9"></path></svg></span><span data-language-label>Arabic</span></button>
+      </div>
     </header>
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">

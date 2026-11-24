@@ -1,0 +1,5 @@
+# Keep versioned APK downloads byte-for-byte identical to the published files.
+<If "%{QUERY_STRING} =~ m#^ui=[0-9a-f]{64}$#">
+    ForceType application/octet-stream
+    Header set Cache-Control "private, no-store, no-transform"
+</If>

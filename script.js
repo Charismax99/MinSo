@@ -119,6 +119,7 @@ const translations = {
     lightboxNext: "Next image",
     footerLove: "Handmade with love",
     footerPoweredBy: "Powered by:",
+    darkMode: "Dark mode",
     navLabel: "Quick links",
     navShop: "Shop",
     navCustom: "Custom piece",
@@ -239,6 +240,7 @@ const translations = {
     lightboxNext: "الصورة التالية",
     footerLove: "هاند ميد بحب",
     footerPoweredBy: "بدعم من:",
+    darkMode: "الوضع الليلي",
     navLabel: "روابط سريعة",
     navShop: "تسوّق",
     navCustom: "قطعة مخصوص",
@@ -248,6 +250,17 @@ const translations = {
 };
 
 const languageButton = document.querySelector(".language-toggle");
+const themeButton = document.querySelector("[data-theme-toggle]");
+const themeColor = document.querySelector('meta[name="theme-color"]');
+const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+const themeStorageKey = "minso-theme";
+let themePreference;
+try {
+  const savedTheme = localStorage.getItem(themeStorageKey);
+  if (savedTheme === "light" || savedTheme === "dark") themePreference = savedTheme;
+} catch {
+  // The theme can still be changed when storage is unavailable.
+}
 const languageLabel = document.querySelector("[data-language-label]");
 const whatsappLink = document.querySelector("[data-whatsapp-link]");
 const customOrderLink = document.querySelector("[data-custom-order-link]");
@@ -335,6 +348,13 @@ function translateText(root) {
   });
 }
 
+function applyTheme() {
+  const theme = themePreference ?? (systemTheme.matches ? "dark" : "light");
+  document.documentElement.dataset.theme = theme;
+  themeColor?.setAttribute("content", theme === "dark" ? "#241a14" : "#f6eee7");
+  themeButton?.setAttribute("aria-pressed", String(theme === "dark"));
+}
+
 function setLanguage(language) {
   currentLanguage = language;
   const bagPanel = document.querySelector("#bag-product-panel");
@@ -351,6 +371,7 @@ function setLanguage(language) {
   updateCustomOrderControl();
   languageLabel.textContent = language === "ar" ? "الإنجليزية" : "Arabic";
   languageButton.setAttribute("aria-label", language === "ar" ? "Switch to English" : "Switch to Arabic");
+  themeButton?.setAttribute("aria-label", translations[language].darkMode);
   document.title = language === "ar" ? "Min-So | هاند ميد بحب" : "Min-So | Handmade with Love";
   categoryTabList.setAttribute("aria-label", translations[language].categoryTabList);
   bottomNav.setAttribute("aria-label", translations[language].navLabel);
@@ -609,6 +630,20 @@ function showToast(message) {
 }
 
 languageButton.addEventListener("click", () => setLanguage(currentLanguage === "en" ? "ar" : "en"));
+if (themeButton) {
+  themeButton.addEventListener("click", () => {
+    themePreference = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme();
+    try {
+      localStorage.setItem(themeStorageKey, themePreference);
+    } catch {
+      // Keep the selected theme for the current page.
+    }
+  });
+  themeButton.hidden = false;
+}
+systemTheme.addEventListener("change", applyTheme);
+applyTheme();
 
 function setActiveGalleryItem(index) {
   activeGalleryIndex = (index + galleryItems.length) % galleryItems.length;
