@@ -76,8 +76,10 @@ a { color: inherit; }
   padding: 0;
 }
 .theme-toggle[hidden] { display: none; }
-.theme-toggle svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.8; }
-.theme-toggle[aria-pressed="true"] svg { fill: currentColor; }
+.theme-toggle svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.theme-toggle .theme-moon,
+.theme-toggle[aria-pressed="true"] .theme-sun { display: none; }
+.theme-toggle[aria-pressed="true"] .theme-moon { display: block; fill: currentColor; }
 
 .language-toggle span:first-child { font-size: 1rem; }
 .language-icon {
