@@ -44,6 +44,7 @@ const translations = {
     newCoaster11Alt: "Brown coaster with an orange pumpkin",
     productOffWhite: "Off-white",
     soldOut: "Sold out",
+    productDataUnavailable: "Price and availability are temporarily unavailable.",
     homeCushion: "HOME Cushion",
     homeCushionAlt: "Cream HOME cushion with colorful punch needle letters and tassels on a sofa",
     eyebrow: "MADE WITH HEART. MADE BY HAND.",
@@ -159,6 +160,7 @@ const translations = {
     newCoaster11Alt: "كوستر بني برسمة يقطينة برتقالية",
     productOffWhite: "أوف وايت",
     soldOut: "نفد المخزون",
+    productDataUnavailable: "السعر وحالة التوفّر غير متاحين مؤقتًا.",
     homeCushion: "كوشن HOME",
     homeCushionAlt: "كوشن كريمي بكلمة HOME مطرزة بألوان مختلفة وشرابات على انتريه",
     eyebrow: "معمولة بحب.. وبإيدينا. 🤍",
@@ -249,12 +251,12 @@ productPanels.forEach((panel) => {
   panel.classList.toggle("has-multiple-products", productCount > 1);
 });
 const categoryTabList = document.querySelector("[data-category-tablist]");
-const bagOrder = document.querySelector("[data-bag-order]");
-const cushionOrders = [...document.querySelectorAll("[data-cushion-order]")];
+const catalogCards = [...document.querySelectorAll("[data-product-id]")];
+const productOrders = [];
 const productColorGroup = document.querySelector("[data-product-color-group]");
+const productColorChoice = productColorGroup.closest(".product-color-choice");
 const productColorOptions = [...document.querySelectorAll("[data-product-color]")];
 const productSelection = document.querySelector("[data-product-selection]");
-const productOrder = document.querySelector("[data-product-order]");
 let selectedProductColor = null;
 let currentLanguage = /^ar\b/i.test(navigator.language) ? "ar" : "en";
 let toastTimer;
@@ -318,15 +320,19 @@ function updateGalleryLabels() {
   updateLightbox(lightboxIndex, false);
 }
 
+function translateText(root) {
+  root.querySelectorAll("[data-i18n]").forEach((element) => {
+    element.textContent = translations[currentLanguage][element.dataset.i18n];
+  });
+}
+
 function setLanguage(language) {
   currentLanguage = language;
   const bagPanel = document.querySelector("#bag-product-panel");
   bagPanel.classList.toggle("has-multiple-products", bagPanel.querySelectorAll(".product-feature:not([hidden])").length > 1);
   document.documentElement.lang = language;
   document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
-  document.querySelectorAll("[data-i18n]").forEach((element) => {
-    element.textContent = translations[language][element.dataset.i18n];
-  });
+  translateText(document);
   document.querySelectorAll("[data-alt-i18n]").forEach((image) => {
     image.alt = translations[language][image.dataset.altI18n];
   });
@@ -342,9 +348,7 @@ function setLanguage(language) {
   selectCategory(0, false);
   updateGalleryLabels();
   updateProductSelection();
-  updateBagOrder();
-  updateCushionOrders();
-  updateLocalizedProductOrders();
+  updateProductOrders();
 }
 
 function setupCustomOrderSlideshow() {
@@ -402,81 +406,145 @@ function setupCustomOrderSlideshow() {
   return updateControl;
 }
 
+function getProductCommerce(product) {
+  const { price = null, sale_price: salePrice = null, sold_out: soldOut } = product ?? {};
+  const hasPrice = Number.isFinite(price) && price >= 0;
+  const validSale = salePrice === null || (hasPrice && Number.isFinite(salePrice) && salePrice >= 0 && salePrice < price);
+
+  if (typeof soldOut !== "boolean" || (!hasPrice && !(soldOut && price === null)) || !validSale) {
+    return { price: null, salePrice: null, status: "productDataUnavailable", orderPrice: null };
+  }
+
+  return {
+    price,
+    salePrice,
+    status: soldOut ? "soldOut" : null,
+    orderPrice: soldOut ? null : (salePrice ?? price)
+  };
+}
+
+function renderProductCatalog(products) {
+  const priceTemplate = document.getElementById("product-price-template");
+  const saleTemplate = document.getElementById("product-sale-template");
+  const orderTemplate = document.getElementById("product-order-template");
+
+  for (const card of catalogCards) {
+    const product = products.get(card.dataset.productId);
+    const { price, salePrice, status, orderPrice } = getProductCommerce(product);
+    const content = card.querySelector(".product-content");
+
+    if (price !== null) {
+      const priceMarkup = (salePrice === null ? priceTemplate : saleTemplate).content.cloneNode(true);
+      priceMarkup.querySelector("[data-price-value]").textContent = price;
+      if (salePrice !== null) {
+        priceMarkup.querySelector("[data-sale-price-value]").textContent = salePrice;
+        const badge = document.createElement("span");
+        badge.className = "product-sale-badge";
+        badge.dataset.i18n = "saleBadge";
+        card.querySelector(".product-photo-frame").append(badge);
+      }
+      content.querySelector("[data-product-price]").replaceWith(priceMarkup);
+    }
+
+    if (status) {
+      const label = document.createElement("p");
+      label.className = "product-sold-out";
+      label.dataset.i18n = status;
+      content.append(label);
+    } else {
+      const link = orderTemplate.content.firstElementChild.cloneNode(true);
+      content.append(link);
+      productOrders.push({ card, product, link, price: orderPrice });
+      if (product.id === "xl-pouch") productColorChoice.hidden = false;
+    }
+
+    translateText(card);
+  }
+
+  updateProductOrders();
+}
+
+async function loadProductCatalog() {
+  let products = new Map();
+  try {
+    const response = await fetch("products.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error(`Catalog returned HTTP ${response.status}`);
+    const catalog = await response.json();
+    if (!Array.isArray(catalog.products)) throw new Error("Catalog has no product list");
+
+    const records = new Map();
+    for (const product of catalog.products) {
+      if (!product?.id || typeof product.id !== "string" || records.has(product.id)) {
+        throw new Error("Catalog contains a missing or duplicate product ID");
+      }
+      records.set(product.id, product);
+    }
+    products = records;
+  } catch (error) {
+    console.warn("Could not load the product catalog:", error);
+  }
+  renderProductCatalog(products);
+}
+
 function updateProductSelection() {
   const copy = translations[currentLanguage];
   productColorGroup.setAttribute("aria-label", copy.productColorGroup);
   productColorOptions.forEach((option) => {
     option.setAttribute("aria-pressed", String(option.dataset.productColor === selectedProductColor));
   });
+  const color = copy[selectedProductColor === "black" ? "productBlack" : "productWhite"];
+  productSelection.textContent = selectedProductColor ? `${copy.productSelectedColor} ${color}` : copy.productSelectColor;
+}
 
-  if (!selectedProductColor) {
-    productSelection.textContent = copy.productSelectColor;
-    productOrder.removeAttribute("href");
-    productOrder.setAttribute("aria-disabled", "true");
-    productOrder.tabIndex = -1;
-    return;
+function getProductOrderMessage(card, product, price) {
+  const copy = translations[currentLanguage];
+  const isArabic = currentLanguage === "ar";
+  const name = copy[card.querySelector("h3").dataset.i18n];
+
+  if (product.id === "xl-pouch") {
+    const color = copy[selectedProductColor === "black" ? "productBlack" : "productWhite"];
+    const size = card.querySelector("[data-product-size-value]").textContent.trim();
+    const dimensions = card.querySelector("[data-product-dimensions-value]").textContent.trim();
+    return isArabic
+      ? `مرحبًا Min-So، أريد طلب ${name} باللون ${color}. الحجم: ${size}، الأبعاد: ${dimensions} ${copy.productCentimeters}، السعر: ${price} ${copy.productCurrency}.`
+      : `Hello Min-So, I'd like to order the ${name} in ${color}. Size: ${size}, dimensions: ${dimensions} ${copy.productCentimeters}, price: ${price} ${copy.productCurrency}.`;
   }
 
-  const colorName = copy[selectedProductColor === "black" ? "productBlack" : "productWhite"];
-  productSelection.textContent = `${copy.productSelectedColor} ${colorName}`;
-  const size = document.querySelector("[data-product-size-value]").textContent.trim();
-  const dimensions = document.querySelector("[data-product-dimensions-value]").textContent.trim();
-  const price = document.querySelector("[data-product-price-value]").textContent.trim();
-  const message = currentLanguage === "ar"
-    ? `مرحبًا Min-So، أريد طلب ${copy.productTitle} باللون ${colorName}. الحجم: ${size}، الأبعاد: ${dimensions} ${copy.productCentimeters}، السعر: ${price} ${copy.productCurrency}.`
-    : `Hello Min-So, I'd like to order the ${copy.productTitle} in ${colorName}. Size: ${size}, dimensions: ${dimensions} ${copy.productCentimeters}, price: ${price} ${copy.productCurrency}.`;
-  const orderUrl = new URL(WHATSAPP_URL);
-  orderUrl.searchParams.set("text", message);
-  productOrder.href = orderUrl.toString();
-  productOrder.setAttribute("aria-disabled", "false");
-  productOrder.tabIndex = 0;
+  if (product.id === "night-garden") {
+    const dimensions = card.querySelector("[data-bag-dimensions-value]").textContent.trim();
+    return isArabic
+      ? `مرحبًا Min-So، أريد طلب ${name} باللون ${copy.productBlack}. الأبعاد: ${dimensions} ${copy.productCentimeters}، السعر: ${price} ${copy.productCurrency}.`
+      : `Hello Min-So, I'd like to order the ${name} in ${copy.productBlack}. Dimensions: ${dimensions} ${copy.productCentimeters}, price: ${price} ${copy.productCurrency}.`;
+  }
+
+  const color = product[`color_${currentLanguage}`];
+  const types = {
+    totes: { en: "tote bag", ar: "توتي باج" },
+    coasters: { en: "coaster", ar: "كوستر" },
+    cushions: { en: "cushion", ar: "كوشن" }
+  };
+  const type = types[product.category]?.[currentLanguage] ?? (isArabic ? "قطعة" : "piece");
+  return isArabic
+    ? `مرحبًا Min-So، أريد طلب ${type} «${name}»${color ? ` باللون ${color}` : ""}. السعر: ${price} ${copy.productCurrency}.`
+    : `Hello Min-So, I'd like to order the "${name}" ${type}${color ? ` in ${color}` : ""}. Price: ${price} ${copy.productCurrency}.`;
 }
 
-function updateBagOrder() {
-  const copy = translations[currentLanguage];
-  const dimensions = document.querySelector("[data-bag-dimensions-value]").textContent.trim();
-  const price = document.querySelector("[data-bag-price-value]").textContent.trim();
-  const message = currentLanguage === "ar"
-    ? `مرحبًا Min-So، أريد طلب ${copy.bagTitle} باللون ${copy.productBlack}. الأبعاد: ${dimensions} ${copy.productCentimeters}، السعر: ${price} ${copy.productCurrency}.`
-    : `Hello Min-So, I'd like to order the ${copy.bagTitle} in ${copy.productBlack}. Dimensions: ${dimensions} ${copy.productCentimeters}, price: ${price} ${copy.productCurrency}.`;
-  const orderUrl = new URL(WHATSAPP_URL);
-  orderUrl.searchParams.set("text", message);
-  bagOrder.href = orderUrl.toString();
-}
-
-function updateCushionOrders() {
-  const copy = translations[currentLanguage];
-  cushionOrders.forEach((order) => {
-    const name = copy[order.dataset.cushionOrder];
-    const message = currentLanguage === "ar"
-      ? `مرحبًا Min-So، أريد طلب كوشن «${name}». السعر: 350 ${copy.productCurrency}.`
-      : `Hello Min-So, I'd like to order the "${name}" cushion. Price: 350 ${copy.productCurrency}.`;
-    const orderUrl = new URL(WHATSAPP_URL);
-    orderUrl.searchParams.set("text", message);
-    order.href = orderUrl.toString();
-  });
-}
-
-function updateLocalizedProductOrders() {
-  const copy = translations[currentLanguage];
-  document.querySelectorAll("[data-local-order]").forEach((order) => {
-    const card = order.closest(".product-feature");
-    const name = copy[order.dataset.nameKey];
-    const price = card.querySelector(".product-price bdi").textContent.trim();
-    const type = order.dataset.localOrder;
-    const color = order.dataset.colorKey ? copy[order.dataset.colorKey] : null;
-    let message;
-    if (currentLanguage === "ar") {
-      const product = type === "bag" ? "توتي باج" : type === "coaster" ? "كوستر" : "كوشن";
-      message = `مرحبًا Min-So، أريد طلب ${product} «${name}»${color ? ` باللون ${color}` : ""}. السعر: ${price} ${copy.productCurrency}.`;
-    } else {
-      const product = type === "bag" ? "tote bag" : type === "coaster" ? "coaster" : "cushion";
-      message = `Hello Min-So, I'd like to order the "${name}" ${product}${color ? ` in ${color}` : ""}. Price: ${price} ${copy.productCurrency}.`;
+function updateProductOrders() {
+  for (const { card, product, link, price } of productOrders) {
+    if (product.id === "xl-pouch") {
+      link.setAttribute("aria-disabled", String(!selectedProductColor));
+      if (!selectedProductColor) {
+        link.removeAttribute("href");
+        link.tabIndex = -1;
+        continue;
+      }
+      link.tabIndex = 0;
     }
+
     const url = new URL(WHATSAPP_URL);
-    url.searchParams.set("text", message);
-    order.href = url.toString();
-  });
+    url.searchParams.set("text", getProductOrderMessage(card, product, price));
+    link.href = url.toString();
+  }
 }
 
 function selectCategory(index, scrollToPanel) {
@@ -519,6 +587,7 @@ productColorOptions.forEach((option) => {
   option.addEventListener("click", () => {
     selectedProductColor = option.dataset.productColor;
     updateProductSelection();
+    updateProductOrders();
   });
 });
 
@@ -683,3 +752,4 @@ document.querySelectorAll(".reveal").forEach((element) => observer.observe(eleme
 setActiveGalleryItem(0);
 const updateCustomOrderControl = setupCustomOrderSlideshow();
 setLanguage(currentLanguage);
+loadProductCatalog();
