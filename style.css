@@ -77,9 +77,10 @@ a { color: inherit; }
 }
 .theme-toggle[hidden] { display: none; }
 .theme-toggle svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-.theme-toggle .theme-moon,
-.theme-toggle[aria-pressed="true"] .theme-sun { display: none; }
-.theme-toggle[aria-pressed="true"] .theme-moon { display: block; fill: currentColor; }
+.theme-toggle .theme-sun,
+.theme-toggle[aria-pressed="true"] .theme-moon { display: none; }
+.theme-toggle[aria-pressed="true"] .theme-sun { display: block; }
+.theme-toggle .theme-moon { fill: currentColor; }
 
 .language-toggle span:first-child { font-size: 1rem; }
 .language-icon {
