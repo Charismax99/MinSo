@@ -441,7 +441,7 @@ html[lang="en"] .product-order { font-family: Georgia, "Times New Roman", serif;
   gap: clamp(1.6rem, 4vw, 3rem);
   align-items: center;
   padding: clamp(1.25rem, 5vw, 3.25rem);
-  border: 1px solid var(--line);
+  border: 2px solid #b9765b;
   border-radius: 1.75rem;
   background: linear-gradient(125deg, var(--paper), #f4e4dc);
   box-shadow: var(--shadow);
