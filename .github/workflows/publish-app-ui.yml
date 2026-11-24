@@ -1,0 +1,53 @@
+name: Publish app interface manifest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - style.css
+      - script.js
+      - assets/**
+      - tools/build_app_ui.py
+      - .github/workflows/publish-app-ui.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: minso-app-ui-main
+  cancel-in-progress: false
+
+jobs:
+  manifest:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Generate and publish the manifest
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          # Hostinger deploys main. Generate from its newest tip on every retry.
+          for attempt in 1 2 3; do
+            git fetch --no-tags origin main
+            git checkout --detach FETCH_HEAD
+            python3 tools/build_app_ui.py
+            git add -- app-ui.json
+            if git diff --cached --quiet; then
+              exit 0
+            fi
+            git diff --cached --check
+            git commit -m 'Publish app interface manifest'
+            if git push origin HEAD:refs/heads/main; then
+              exit 0
+            fi
+          done
+          echo 'Could not publish the manifest after three attempts.' >&2
+          exit 1
